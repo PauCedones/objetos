@@ -1,80 +1,95 @@
-//OBJETOS
+//////////////
 
-//EJERCICIO 1
+const shopping = require('./objetos'),
+    productos = shopping.productos;
+    
+    //productos es el nombre de la variable, no del archivo
 
-/**********************************************
- * Hacer un programa que nos permita 
- * cargar/modificar/borrar
- * productos (deberían tener "id", como identificador 
- * único de número, por ej: 1, 2, 3.; título, descripción
- * de producto y precio (float)).
- * 
- * Además de esto vamos a necesitar un carrito de compras
- * que nos permita cargar/modificar/borrar productos de 
- * nuestro carrito, sumar el precio total de los elementos
- * de nuestro carrito. 
- */
+//////////////
+
+beforeEach(()=>{
+    productos.lista = [];
+    console.log("Funciona el Before");
+ });
 
 
- //lista de pasos para no morir en el intento
- // como cargamos un producto
- // en el objeto unitario hay que agregarle parametros, donde pongo los parametros?
- //
-let productos =[];
 
-const agregar_producto = (n_id,n_titulo,n_descripcion,n_precio)=>{
 
-      productos.push({
-         id: n_id,
-         titulo: n_titulo,
-         descripcion: n_descripcion,
-         precio: parseFloat(n_precio),
-      });
+////////////
 
-}
-
-const eliminar_producto =(n_id)=>{
-
-   for (let i=0 ; i < productos.length; i++){
-
-      if(productos[i][0]=n_id){
-         productos.splice(i,1);
-      }
-   }
-   return(productos);
-}
 
 test ("Cargar producto tampones y toallitas", () => {
     
-   agregar_producto(89,"tampones", "sirve para hacer un tecito", 45.95);
-   agregar_producto(69,"toallitas", "paraa secar el sudor", 96.56);
 
-    expect (productos.length).toBe (2);
-    expect (productos[0].id).toBe(89);
+    productos.agregar_producto(89,"tampones", "sirve para hacer un tecito", 45.95);
+    productos.agregar_producto(69,"toallitas", "paraa secar el sudor", 96.56);
  
+     expect (productos.lista[0]).toStrictEqual ({
 
- });
+        id: 89,
+        titulo: "tampones",
+        descripcion: "sirve para hacer un tecito",
+        precio: 45.95
+     });
 
- test ("eliminar toallitas", () => {
+     expect (productos.lista[1]).toStrictEqual ({
 
-   agregar_producto(89,"tampones", "sirve para hacer un tecito", 45.95);
-   agregar_producto(69,"toallitas", "paraa secar el sudor", 96.56);
+        id: 69,
+        titulo: "toallitas",
+        descripcion: "paraa secar el sudor",
+        precio: 96.56
+     });
 
-   eliminar_producto(69);
-
-   expect (productos.length).toBe (1);
-    
-
- });
-
- test ("Modificar tampones por galletitas", () => {
-    
-
+     
+  
  
+  });
 
- });
+  /// Borrar un producto 
 
- beforeEach(()=>{
-   productos=[];
-   console.log("Funciona el Before");
+test("Borra producto de lista por id", () =>{
+    productos.agregar_producto(8, "supositorio", "medicamento por via vaginal", 145.78);
+    expect(productos.lista.length).toBe(1);
+    productos.eliminar_producto(1);
+    expect(productos.lista.length).toBe(0);
 });
+
+// Intentar borrar un producto pero ingresando cualquier cosa
+
+test("Tira error cuando no existe id para borrar", () =>{
+    expect(() => {
+        productos.eliminar_producto(1);
+    }).toThrow("Error: El id buscado no existe");
+});
+
+/////////////////////////////////////////
+
+
+test("Borro producto del carrito", () =>{
+    productos.cargar_producto(1, "titulo", "desc", 12.33);
+    carrito.agregar(1, 3);
+    expect(carrito.lista.length).toBe(1);
+    carrito.borrar(1);
+    expect(carrito.lista.length).toBe(0);
+});
+
+test("Tira error cuando producto no existe en carrito", () =>{
+    expect(() => {
+        carrito.borrar(1);
+    }).toThrow("Error: Producto no existe en carrito");
+});
+
+test("Suma los precios de los productos", () => {
+    productos.agregar(1, "titulo", "desc", 10.50);
+    productos.agregar(2, "titulo", "desc", 20.50);
+    productos.agregar(3, "titulo", "desc", 30.00);
+    productos.agregar(4, "titulo", "desc", 40.00);
+    carrito.agregar(1, 2);
+    carrito.agregar(2, 2);
+    carrito.agregar(3, 1);
+    carrito.agregar(4, 1);
+    const total = carrito.sumarPrecio();
+    expect(total).toBe(132.00);
+});
+
+
