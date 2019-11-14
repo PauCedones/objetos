@@ -2,11 +2,13 @@
 
 const shopping = require('./objetos'),
     productos = shopping.productos;
+    libro = shopping.libro;
     
     //productos es el nombre de la variable, no del archivo
 
 //////////////
 
+/*
 beforeEach(()=>{
     productos.lista = [];
     console.log("Funciona el Before");
@@ -92,4 +94,20 @@ test("Suma los precios de los productos", () => {
     expect(total).toBe(132.00);
 });
 
+*/
 
+/////////////////////////////////////////////////////////
+
+// EJERCICIO 02
+
+test ("agregar una review", () => {
+
+    libro.agregar_review("Paola","Me parece una cagada",2);
+
+    expect (libro.lista_reviews[0]).toStrictEqual ({
+
+        nombre: "Paola",
+        critica: "Me parece una cagada",
+        valoracion: 2
+    });
+});
