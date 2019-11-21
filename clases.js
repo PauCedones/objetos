@@ -130,13 +130,37 @@ class Ropa {
         }
         return "ponerse una remera";
     }
+
 }
+ /**
+  * Transformar los distintos tipos de ropa
+  * del ejercicio anterior a nuevas clases
+  * que extiendan de la clase principal.
+  */
+
+class Camison extends Ropa {
+
+    constructor(){
+        super("bla","ropa","xxl","verde");
+    }
+    vestirParteDeArriba(){
+        return "yey estas lista para dormir";
+    }
+}
+
+// la clase camison no va adentro de la clase Ropa, va aparte :3
+
+
+
+
+
 
 
 ////////////////////
 
 module.exports = {
     Ropa,
+    Camison,
  };
  
  ///////////////////

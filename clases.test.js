@@ -18,3 +18,6 @@ test ("ponerse una remera y una pollera", () => {
     expect (pantalon.vestirParteDeAbajo()).toBe ("ponerse un pantalon y/o falda");
 
 });
+
+//////////////////
+
